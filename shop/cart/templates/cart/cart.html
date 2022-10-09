@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+ <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row g-5">
+    <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">Order price</span>
+          <span class="badge bg-primary rounded-pill">{{ cart.len}}</span>
+        </h4>
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Cost of all goods</h6>
+            </div>
+            <span class="text-muted">{{ cart.get_total_price_str }} ₽</span>
+          </li>
+            {% if promocode %}
+          <li class="list-group-item d-flex justify-content-between bg-light">
+            <div class="text-success">
+              <h6 class="my-0">Promo code</h6>
+              <small>EXAMPLECODE</small>
+            </div>
+            <span class="text-success">−$5</span>
+          </li>
+        {% endif %}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total (RU)</span>
+            <strong>{{ cart.get_total_price_str }} ₽</strong>
+          </li>
+        </ul>
+
+        <form class="card p-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Promo code">
+            <button type="submit" class="btn btn-secondary">Redeem</button>
+          </div>
+        </form>
+      </div>
+
+    <div class="col-md-7 col-lg-8">
+    {% if cart.len != 0 %}
+        <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="row">
+            <h4 class="col-7">
+                {{ cart.len }} Product
+            </h4>
+            <span class="col-2 text-muted text-center">Count</span>
+            <span class="col-3 text-end text-muted">Price</span>
+            </div>
+
+        </li>
+
+        {% for i in cart %}
+        <li class="list-group-item py-3">
+            <div class="row cartproduct">
+                <div class="col-7">
+                    <div class="row">
+                        <a class="col-3" href="{% url 'products:detail' i.product.id %}"><img width="100" class="" src="{{i.product.image.url}}"></a>
+                        <div class="col d-flex flex-column" style="font-size: 0.85rem">
+                            <span class="">{{i.product.category}} <span class="fw-bold">{{ i.product.name}}</span></span>
+                            <br>
+                            <span>Size: <span class="fw-bold">37</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5 row mx-0 px-0">
+                    <span class="col-5 text-center">
+                        <a class="me-1 cartquantity" href="{% url 'cart_page:removeone' i.product.id %}"><i class="bi bi-dash-lg"></i></a>
+                        {{ i.quantity }} pcs
+                        <a class="ms-1 cartquantity" href="{% url 'cart_page:addone' i.product.id %}"><i class="bi bi-plus-lg"></i></a>
+                    </span>
+                    <span class="col-7 text-end">{{ i.total_price }}  ₽</span>
+                    <div class="d-flex justify-content-end align-items-end cartdelfav" style="font-size: 0.9rem; text-decoration: none;">
+                        <a class="d-flex justify-content-center px-4" style="text-decoration: none;" href="{% url 'cart_page:remove' i.product.id %}">Delete</a>
+                        <a class="d-flex" style="text-decoration: none;" href="#">Add to favorites</a>
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+
+        </ul>
+                  <hr class="my-4">
+          <a href="{% url 'cart_page:checkout' %}" class="w-100 btn btn-primary btn-lg" type="submit">Checkout</a>
+        {% else %}
+        <div class="d-flex justify-content-center align-items-center fs-1">Empty!</div>
+        <div class="d-flex justify-content-center align-items-center fs-3">Look for products in the&nbsp<a style="text-decoration: none" href="{% url 'products:products' %}">cataloge</a>.</div>
+    {% endif %}
+      </div>
+
+    </div>
+{% endblock %}

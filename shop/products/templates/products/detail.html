@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'products/_inc/cat_list.html' %}
+<div class="col-md-5 col-sm d-flex justify-content-center">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{ product.image.url }}" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+<div class="col-md-5 col-sm d-flex justify-content-center">
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <p><h4>{{ product.name }}</h4></p>
+            <p class="lead">{{ product.category }}</p>
+            <h4 class="display-6">{{ product.price }} ₽</h4>
+        </li>
+        <li class="list-group-item">
+
+            <p><select class="form-select" aria-label="Default select example">
+              <option selected>Amount</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select></p>
+            <form method="POST">
+                {% csrf_token %}
+            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Add to cart
+            </button>
+            </form>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Added to cart</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="{{ product.image.url }}" class="rounded float-start" width="100" alt="...">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <p>{{ product.category }} {{ product.name }}</p>
+                                    <p class="lead"></p>
+                                </div>
+
+                                <div class="col-md-4 d-flex justify-content-center">
+                                      1
+                                </div>
+
+                                <div class="col-md-4 d-flex justify-content-center">
+                                    <h4>{{ product.price }} ₽</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Continue</button>
+                          <a href="#" type="button" class="btn btn-primary">To cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </li>
+    </ul>
+</div>
+{% endblock %}

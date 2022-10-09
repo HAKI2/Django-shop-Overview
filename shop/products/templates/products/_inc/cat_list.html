@@ -1,0 +1,14 @@
+
+<div class="list-group col-sm-4 col-md-2">
+    {% for i in categorys %}
+    {% if i|lower == category|lower %}
+    <a href="{% url 'products:products' %}" class="list-group-item list-group-item-action active" aria-current="true">
+        {{ i }}
+    </a>
+    {% else %}
+    <a href="{{ i.get_absolute_url }}" class="list-group-item list-group-item-action" aria-current="true">
+        {{ i }}
+    </a>
+    {% endif %}
+    {% endfor %}
+</div>

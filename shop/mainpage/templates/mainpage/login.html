@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+ <div class="modal-content rounded-5 shadow">
+      <div class="modal-header p-5 pb-4 border-bottom-0">
+        <!-- <h5 class="modal-title">Modal title</h5> -->
+        <h2 class="fw-bold mb-0">Login</h2>
+      </div>
+
+      <div class="modal-body p-5 pt-0">
+          <form method="POST" action="#" class="">
+            {% csrf_token %}
+            {% if messages %}
+
+            {% for message in messages %}
+
+                {% if message.tags == 'error'    %}
+                    <div class="alert alert-danger" role="alert">
+                      {{message}}
+                    </div>
+                {% else %}
+                    <div class="alert alert-{{message.tags}}" role="alert">
+                      {{message}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% endif %}
+            {% for i in form %}
+          <div class="form-floating mb-3">
+              {{i}}
+              <label for="{{i.label}}">{{i.label}}</label>
+
+          </div>
+        {% endfor %}
+
+          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Login</button>
+            <p><small class="text-muted">By clicking Login, you agree to the terms of use.</small></p>
+
+          <small class="d-flex justify-content-center">or&nbsp<a href="{% url 'mainpage:register' %}" class="text-body" type="button"> Create an account</a></small>
+          <hr class="my-4">
+          <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
+          <button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-4" type="submit">
+            <svg class="bi me-1" width="16" height="16"><use xlink:href="#twitter"></use></svg>
+            Login with Twitter
+          </button>
+          <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-4" type="submit">
+            <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook"></use></svg>
+            Login with Facebook
+          </button>
+        </form>
+      </div>
+    </div>
+{% endblock %}

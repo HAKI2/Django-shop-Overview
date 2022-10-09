@@ -1,0 +1,13 @@
+.cartproduct:hover .cartdelfav {
+    display: flex !important;
+    visibility: visible !important;
+}
+.cartproduct:hover .cartquantity {
+    visibility: visible !important;
+}
+.cartdelfav {
+    display:none !important;
+}
+.cartquantity {
+    visibility: hidden !important;
+}
